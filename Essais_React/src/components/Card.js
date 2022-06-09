@@ -18,4 +18,4 @@ const Card = ({ country }) => {
     );
 };
 
-export default Card; <li></li>
+export default Card;
