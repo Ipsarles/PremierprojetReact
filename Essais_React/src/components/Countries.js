@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Card from './Card';
 
 
 const Countries = () => {
     const [Data, setData] = useState([]);
+    const [rangeValue, setRangeValue] = useState(36);
     // Le useEffect se joue lorsque le composé est monté ( appelé)
     useEffect(() => {
         axios.get("https://restcountries.com/v3.1/all")
@@ -11,9 +13,21 @@ const Countries = () => {
     }, [])
     return (
         < div className="countries" >
+            <ul className="radio-container">
+                <input
+                    type="range"
+                    min="1"
+                    max="250"
+                    defaultValue={rangeValue}
+                    onChange={(e) => setRangeValue(e.target.value)}
+                />
+            </ul>
             <ul>
-                {Data.map((country, index) =>
-                    (<li key={index}>{country.translations.fra.common}</li>))}
+                {Data
+                    .slice(0, rangeValue)
+                    .map((country, index) => (
+                        < Card key={index} country={country} />
+                    ))}
             </ul>
         </div >
     );
